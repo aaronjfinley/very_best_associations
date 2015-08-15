@@ -11,6 +11,19 @@
       <dt>Cuisine</dt>
       <dd><%= @dish.cuisine.name %></dd>
 
+      <dt>Favorites</dt>
+      <dd>
+      <ul class="list-group">
+      <% @dish.favorites.each do |favorite| %>
+        <li class="list-group-item"><%= favorite.venue.name %> by <%= favorite.user.username %></li>
+      <% end %>
+      <li>
+        <input type="hidden" value="">
+        <input type="text">
+      </li>
+      </ul>
+      </dd>
+
     </dl>
 
     <div class="btn-group btn-group-justified">
