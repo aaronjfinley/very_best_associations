@@ -38,7 +38,7 @@
                   Address
                 </label>
                 <input type="text" id="address" name="address" placeholder="Address" class="form-control" value="<%= @venue.address %>">
-                </div>
+              </div>
 
               <!-- Label and input for director_id -->
               <input name="neighborhood_id" type="hidden" value="<%= @neighborhood.id %>">
@@ -48,6 +48,17 @@
               </button>
             </form>
           </li>
+
+        </dd>
+        <dt>Favorites</dt>
+        <dd>
+          <ul class="list-group">
+            <% @neighborhood.favorites.each do |favorite| %>
+            <li class="list-group-item">
+            <%= favorite.dish.name %> at <%= favorite.venue.name %>
+            </li>
+            <% end %>
+          </ul>
 
         </dd>
       </dl>
