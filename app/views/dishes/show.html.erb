@@ -13,29 +13,63 @@
 
       <dt>Favorites</dt>
       <dd>
-      <ul class="list-group">
-      <% @dish.favorites.each do |favorite| %>
-        <li class="list-group-item"><%= favorite.venue.name %> by <%= favorite.user.username %></li>
-      <% end %>
-      <li>
-        <input type="hidden" value="">
-        <input type="text">
-      </li>
+        <ul class="list-group">
+          <% @dish.favorites.each do |favorite| %>
+          <li class="list-group-item"><%= favorite.venue.name %> by <%= favorite.user.username %>
+          </li>
+          <% end %>
+          <li class="list-group-item">
+            <form action="/create_favorite" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+              <!-- Label and input for user_id -->
+              <div class="form-group">
+                <label for="user_id" class="control-label">
+                  User
+                </label>
+                <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :username, @favorite.user_id), :class => "form-control") %>
+              </div>
+
+              <!-- Label and input for cuisine_id -->
+              <div class="form-group">
+                <label for="venue_id" class="control-label">
+                  Venue
+                </label>
+                <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name, @favorite.venue_id), :class => "form-control") %>
+              </div>
+
+              <div class="form-group">
+                <label for="notes" class="control-label">
+                  Notes
+                </label>
+              <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @favorite.notes %></textarea>
+              </div>
+
+              <!-- Label and input for director_id -->
+              <input name="dish_id" type="hidden" value="<%= @dish.id %>">
+
+              <button class="btn btn-success">
+                Create Favorite
+              </button>
+            </form>
+          </li>
+
       </ul>
-      </dd>
+    </dd>
 
-    </dl>
+  </dl>
 
-    <div class="btn-group btn-group-justified">
-      <a href="/dishes" class="btn btn-primary">
-        Back
-      </a>
-      <a href="/dishes/<%= @dish.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_dish/<%= @dish.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
-    </div>
+  <div class="btn-group btn-group-justified">
+    <a href="/dishes" class="btn btn-primary">
+      Back
+    </a>
+    <a href="/dishes/<%= @dish.id %>/edit" class="btn btn-warning">
+      Edit
+    </a>
+    <a href="/delete_dish/<%= @dish.id %>" class="btn btn-danger" rel="nofollow">
+      Delete
+    </a>
   </div>
+</div>
 </div>
